@@ -1,0 +1,19 @@
+{
+	"name": "derubattle",
+	"description": "game for hikikomori",
+	"developer":{
+	"name": "Hello world"
+	},
+	"launch_path": "/start.html",
+	"icons":{
+	"128": "/image/app_icon.png"
+	},
+	"defalt_local": "ja",
+	"fullscreen": "true",
+	 "permissions": {
+	"geolocation": {
+    	    "description": "Get current geolocation"
+	}
+    }	
+
+}

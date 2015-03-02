@@ -1,0 +1,37 @@
+﻿id,active,name,file
+0,0,ノンキン,nonkin
+1,0,ノジット,nojit
+2,0,ノマルジン,nomarujin
+3,0,わんぱくな ノンキン,nonkin_wanpaku
+4,0,正義感のある ノンキン,nonkin_seigi
+5,0,母性のある ノンキン,nonkin_bosei
+6,0,わんぱくな ノジット,nojit_wanpaku
+7,0,正義感のある ノジット,nojit_seigi
+8,0,母性のある ノジット,nojit_bosei
+9,0,わんぱくな ノマルジン,nomarujin_wanpaku
+10,0,正義感のある ノマルジン,nomarujin_seigi
+11,0,母性のある ノマルジン,nomarujin_bosei
+12,0,シャッキ,syakki
+13,0,シャルン,syarun
+14,0,シャギーク,syagiku
+15,0,かしこい シャッキ,syakki_kashikoi
+16,0,金のある シャッキ,syakki_kane
+17,0,安定感のある シャッキ,syakki_antei
+18,0,かしこい シャルン,syarun_kashikoi
+19,0,金のある シャルン,syarun_kane
+20,0,安定感のある シャルン,syarun_antei
+21,0,かしこい シャギーク,syagiku_kashikoi
+22,0,金のある シャギーク,syagiku_kane
+23,0,安定感のある シャギーク,syagiku_antei
+24,0,ツリメ,turime
+25,0,ツジキリ,tujikiri
+26,0,ツグカゼ,tugukaze
+27,0,清らかな ツリメ,turime_kiyoraka
+28,0,霊感のある ツリメ,turime_reikan
+29,0,感受性のある ツリメ,turime_kanjusei
+30,0,清らかな ツジキリ,tujikiri_kiyoraka
+31,0,霊感のある ツジキリ,tujikiri_reikan
+32,0,感受性のある ツジキリ,tujikiri_kanjusei
+33,0,清らかな ツグカゼ,tugukaze_kiyoraka
+34,0,霊感のある ツグカゼ,tugukaze_reikan
+35,0,感受性のある ツグカゼ,tugukaze_kanjusei

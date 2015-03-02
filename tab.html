@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang = "ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"   content="initial-scale=1.0, user-scalable=no" />
+    <title>delbattle</title>
+    <link rel="stylesheet" type="text/css" href="css/tab.css"  />
+    <link rel="stylesheet" href="css/status.css" />
+    <link rel="stylesheet" href="css/radar-chart.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
+    <script src="js/map.js"></script>
+    <script src="js/data2.js"></script>
+    <script src="js/data.js"></script>
+    <script type="text/javascript" src="lib/d3/d3.min.js"></script>
+    <script type="text/javascript" src="lib/radar-chart-d3/src/radar-chart.js"></script>
+  </head>
+  <body>
+
+    <div class="contents">
+      <div class="contents_all">
+	<div class="contents_frameA">
+	<!-- Field -->
+	  <div class="contentsA">
+	    <div id="map-canvas" style="height: 100%; "></div>
+	    <script>
+	     var lat = 34.705895;
+	     var lng = 135.494474;
+       var user_pos = new google.maps.LatLng(lat, lng);
+       var circles = [];
+       var samples = [];
+       var r = 130;
+       var cir_num = 12;
+	     var map = Map.createMap('map-canvas', lat, lng, 16);
+       // マーカーのドラッグ、ドロップ可（Demo用）ture - false
+	     var marker = Map.createMarker(map, '現在地', lat, lng, true);
+      
+	     Data.loadOsakaData()
+		     .then(function(data) {
+		         circles = [];
+
+		         var update = function() {
+		           var bounds = Map.getMapBounds(map);
+               // 表示範囲内にあるデータをfiltersに格納
+		           var filters = Data.filterByRegion(data,
+						             bounds.lat1, bounds.lng1,
+						             bounds.lat2, bounds.lng2);
+               // そこから指定数のデータをランダムで選択して格納
+		           samples = Data.sample(filters, cir_num);
+               
+               // 選択したデータを基にサークルを描画していく(連想配列の要素数は .lenght ではとれない)
+               var sam_num = Data.getSamNum();
+		           for (var i = 0; i < sam_num; i++) {
+		             var d = samples[i];
+		             var lat = d.latitude;
+		             var lng = d.longitude;
+                 console.log("表示するデータ\nアイコン番号：" + d.icon_number + "\n名前：" + d.name);
+           
+		             var skill = Data.place2skill[Data.id2place[d.icon_number]];
+		             var color = {"身体的パワー": "#ff7f50",
+				          "社会的パワー": "#4169e1",
+				          "精神的パワー": "#3cb371"}[skill];
+
+		             var circle = Map.createCircle(map, lat, lng, r, color);
+		             circles.push(circle);
+		           }
+		         }
+
+		         update();
+
+             // 地図のスケールや中心が移動したとき、サークルを更新する
+		         google.maps.event.addListener(map, 'bounds_changed', function() {
+		           circles.forEach(function(c, i) {
+		             c.setMap(null);
+		           });
+		           circles = [];
+
+		           update();
+		         });
+             
+             // マーカーのドロップ（ドラッグ終了）時のイベント
+	          google.maps.event.addListener(marker, 'dragend', function(ev){
+		            // イベントの引数evの、プロパティ.latLngが緯度経度。
+                user_pos = ev.latLng;
+	           });
+		   });
+	    </script>
+	    <div class="deru_button">
+	      <img class="deru" src="image/deru_button.png"></img>
+	    </div>
+
+
+	  </div>
+	</div>
+	<!-- Status -->
+	<div class="contents_frameB">
+	  <div class="contentsB">
+      <div class="status_head">ステータス</div>
+
+      <div id="status">
+
+        <ul>
+          <li>
+            Name: <span class="name"></span>
+          </li>
+          <li>
+            Lv.: <span class="lv"></span>
+          </li>
+          <li>
+            HP: <span class="hp"></span>
+          </li>
+        </ul>
+
+        <div id="radar-chart"></div>
+
+        <div id="detail">
+          <h2>フィジカル</h2>
+          <ul>
+            <li>
+              わんぱく: <span class="wanpaku"></span>
+            </li>
+            <li>
+              正義: <span class="seigi"></span>
+            </li>
+            <li>
+              母性: <span class="bosei"></span>
+            </li>
+          </ul>
+
+          <h2>ソーシャル</h2>
+          <ul>
+            <li>
+              かしこさ: <span class="kasikosa"></span>
+            </li>
+            <li>
+              金: <span class="kane"></span>
+            </li>
+            <li>
+              安定: <span class="antei"></span>
+            </li>
+          </ul>
+
+          <h2>スピリチュアル</h2>
+          <ul>
+            <li>
+              清め: <span class="kiyome"></span>
+            </li>
+            <li>
+              霊感: <span class="reikan"></span>
+            </li>
+            <li>
+              感受性: <span class="kanjusei"></span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <script src="js/status.js"></script>
+      
+	  </div>
+	</div>
+	<!-- Collection -->
+	<div class="contents_frameC">
+	  <div class="contentsC">
+      <div class="collection_head">モンスター図鑑</div>
+      <table class="collection">
+        <tr>
+          <td id="t0">
+            <img id="e0" class="collection"></img>
+            <p id="p0"></p>
+          </td>
+          <td id="t1">
+            <img id="e1" class="collection"></img>
+            <p id="p1"></p>
+          </td>
+          <td id="t2">
+            <img id="e2" class="collection"></img>
+            <p id="p2"></p>
+          </td>
+        </tr>
+        <tr>
+          <td id="t3">
+            <img id="e3" class="collection"></img>
+            <p id="p3"></p>
+          </td>
+          <td id="t4">
+            <img id="e4" class="collection"></img>
+            <p id="p4"></p>
+          </td>
+          <td id="t5">
+            <img id="e5" class="collection"></img>
+            <p id="p5"></p>
+          </td>
+        </tr>
+        <tr>
+          <td id="t6">
+            <img id="e6" class="collection"></img>
+            <p id="p6"></p>
+          </td>
+          <td id="t7">
+            <img id="e7" class="collection"></img>
+            <p id="p7"></p>
+          </td>
+          <td id="t8">
+            <img id="e8" class="collection"></img>
+            <p id="p8"></p>
+          </td>
+        </tr>
+        <tr>
+          <td id="t9">
+            <img id="e9" class="collection"></img>
+            <p id="p9"></p>
+          </td>
+          <td id="t10">
+            <img id="e10" class="collection"></img>
+            <p id="p10"></p>
+          </td>
+          <td id="t11">
+            <img id="e11" class="collection"></img>
+            <p id="p11"></p>
+          </td>
+        </tr>
+        <tr>
+          <td id="t12">
+            <img id="e12" class="collection"></img>
+            <p id="p12"></p>
+          </td>
+          <td id="t13">
+            <img id="e13" class="collection"></img>
+            <p id="p13"></p>
+          </td>
+          <td id="t14">
+            <img id="e14" class="collection"></img>
+            <p id="p14"></p>
+          </td>
+        </tr>
+        <tr>
+          <td id="t15">
+            <img id="e15" class="collection"></img>
+            <p id="p15"></p>
+          </td>
+          <td id="t16">
+            <img id="e16" class="collection"></img>
+            <p id="p16"></p>
+          </td>
+          <td id="t17">
+            <img id="e17" class="collection"></img>
+            <p id="p17"></p>
+          </td>
+        </tr>
+        <tr>
+          <td id="t18">
+            <img id="e18" class="collection"></img>
+            <p id="p18"></p>
+          </td>
+          <td id="t19">
+            <img id="e19" class="collection"></img>
+            <p id="p19"></p>
+          </td>
+          <td id="t20">
+            <img id="e20" class="collection"></img>
+            <p id="p20"></p>
+          </td>
+        </tr>
+        <tr>
+          <td id="t21">
+            <img id="e21" class="collection"></img>
+            <p id="p21"></p>
+          </td>
+          <td id="t22">
+            <img id="e22" class="collection"></img>
+            <p id="p22"></p>
+          </td>
+          <td id="t23">
+            <img id="e23" class="collection"></img>
+            <p id="p23"></p>
+          </td>
+        </tr>
+        <tr>
+          <td id="t24">
+            <img id="e24" class="collection"></img>
+            <p id="p24"></p>
+          </td>
+          <td id="t25">
+            <img id="e25" class="collection"></img>
+            <p id="p25"></p>
+          </td>
+          <td id="t26">
+            <img id="e26" class="collection"></img>
+            <p id="p26"></p>
+          </td>
+        </tr>
+        <tr>
+          <td id="t27">
+            <img id="e27" class="collection"></img>
+            <p id="p27"></p>
+          </td>
+          <td id="t28">
+            <img id="e28" class="collection"></img>
+            <p id="p28"></p>
+          </td>
+          <td id="t29">
+            <img id="e29" class="collection"></img>
+            <p id="p29"></p>
+          </td>
+        </tr>
+        <tr>
+          <td id="t30">
+            <img id="e30" class="collection"></img>
+            <p id="p30"></p>
+          </td>
+          <td id="t31">
+            <img id="e31" class="collection"></img>
+            <p id="p31"></p>
+          </td>
+          <td id="t32">
+            <img id="e32" class="collection"></img>
+            <p id="p32"></p>
+          </td>
+        </tr>
+        <tr>
+          <td id="t33">
+            <img id="e33" class="collection"></img>
+            <p id="p33"></p>
+          </td>
+          <td id="t34">
+            <img id="e34" class="collection"></img>
+            <p id="p34"></p>
+          </td>
+          <td id="t35">
+            <img id="e35" class="collection"></img>
+            <p id="p35"></p>
+          </td>
+        </tr>
+      </table>
+	  </div>
+	</div>
+  <script src="js/collection.js"></script>
+      </div>
+      <div class="tabbox">
+	<div class="tab-buttonA">
+    field
+  </div>
+	<div class="tab-buttonB">
+    status
+  </div>
+	<div class="tab-buttonC">
+    collection
+  </div>
+      </div>
+      
+    </div>
+
+    
+    <script src="js/tab.js"></script>
+    <script src="js/encount.js"></script>
+  </body>
+</html>

@@ -1,0 +1,142 @@
+html{
+	width: 100%;
+	background-color: white;
+}
+
+body {
+	background-color: white;
+}
+
+p {
+	position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+img.enemy {
+	max-width: 100%;
+	max-height: 100%;
+	position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+div.name {
+	width: 100%;
+	height: 5%;
+	background-color: #ffff99;
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	text-align: center;
+	font-color: gray;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+div.enemy {
+	width: 90%;
+	height: 55%;
+	position: absolute;
+	top: 50px;
+	left: 5%;
+}
+
+div.hp {
+	width: 100%;
+	height: 6%;
+	position: absolute;
+	bottom: 30%;
+	left: 0%;
+	text-align: center;
+	font-color: gray;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+div.menu {
+	width: 100%;
+	height: 30%;
+	background-color: white;
+	position: absolute;
+	bottom: 5px;
+	left: -2.5px;
+}
+
+div.comment {
+	width: 100%;
+	height: 30%;
+	background-color: #fffacd;
+	padding: 10px;
+	position: absolute;
+	bottom: 0px;
+	left: -3px;
+	font-size: 10pt;
+	text-align: left;
+	border-style: solid;
+	border-width: medium;
+	border-color: #ffa500;
+	visibility: hidden;
+}
+
+div.button_leftup {
+	width: 50%;
+	height: 50%;
+	background-color: #ffff99;
+	font-size: 16pt;
+	text-align: center;
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	border-style: solid;
+	border-width: medium;
+	border-color: white;
+}
+
+div.button_rightup {
+	width: 50%;
+	height: 50%;
+	background-color: #ffff99;
+	font-size: 16pt;
+	text-align: center;
+	position: absolute;
+	top: 0%;
+	left: 50%;
+	border-style: solid;
+	border-width: medium;
+	border-color: white;
+}
+
+div.button_leftdown {
+	width: 50%;
+	height: 50%;
+	background-color: #ffff99;
+	font-size: 16pt;
+	text-align: center;
+	position: absolute;
+	top: 50%;
+	left: 0%;
+	border-style: solid;
+	border-width: medium;
+	border-color: white;
+}
+
+div.button_rightdown {
+	width: 50%;
+	height: 50%;
+	background-color: #ffff99;
+	font-size: 16pt;
+	text-align: center;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	border-style: solid;
+	border-width: medium;
+	border-color: white;
+}
