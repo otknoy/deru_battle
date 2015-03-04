@@ -41,20 +41,38 @@ var collInfo = {	// 有効かどうか
     "34":0,
     "35":0};
 
-
 /*-- 画面が開かれたとき --*/
 $(window).load(function() {
     // 各種情報を読み込む
     loading_info();
     loading_coll();
+
     // 画像と名前を出力
-    var sel_img;
-    var sel_p;
-    for(i = 0; i < 36; i++){
-	sel_img = "img#e" + i;
-	sel_p = "p#p" + i;
-	$(sel_img).attr("src", "image/" + file[i]);
-	$(sel_p).html(ename[i]);
+    var $table = $('table#collection');
+    var n = 36;
+    var w = 3;
+    var h = n / w;
+
+    for (var i = 0; i < h; i++) {
+	var $tr = $('<tr>');
+
+	for (var j = 0; j < w; j++) {
+	    var k = i*w + j;
+
+	    var $td = $('<td>');
+	    var $img = $('<img>').attr('src', 'image/' + file[k])
+		    .attr({'id': 'e' + k, 'class': 'collection'});
+	    var $p = $('<p>').html(ename[k]);
+
+	    console.log(ename[k]);
+
+	    $td.append($img);
+	    $td.append($p);
+
+	    $tr.append($td);
+	}
+
+	$table.append($tr);
     }
 });
 
