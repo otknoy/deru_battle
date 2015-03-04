@@ -1,4 +1,4 @@
-﻿var Map = {};
+var Map = {};
 
 Map.createMap = function(id, lat, lng, zoom) {
     var mapOptions = {

@@ -1,4 +1,4 @@
-﻿var circles_pos = [];		// サークルの座標(latlng)
+var circles_pos = [];		// サークルの座標(latlng)
 var circles_prop = [];		// サークルの属性
 var distance = [];			// プレイヤーとサークルの距離
 var belong = [];			// サークルにプレイヤーが属しているかどうか
