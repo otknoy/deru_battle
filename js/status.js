@@ -29,14 +29,12 @@ Todo:
 $(window).load(function() {
 	// 各種情報を読み込む
 	var playerStatus = JSON.parse(localStorage.getItem("playerStatus"));
-	console.log(playerStatus);
 	updateStatus(playerStatus);
 });
 
 
 
-
-/* functions */
+/* functions for updating player status*/
 
 function updateBasicStatus(name, lv, hp) {
     $("#status .name").text(name);
