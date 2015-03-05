@@ -42,8 +42,6 @@ function loadItems(collection) {
 	    var csv = Data.parseCSV(data);
 	    var collection = Data.csv2dict(csv);
 
-	    console.log(collection[0].file);
-
 	    var collected = JSON.parse(localStorage.getItem("collection"));
 	    var n = collection.length;
 
