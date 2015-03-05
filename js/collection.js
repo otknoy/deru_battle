@@ -18,7 +18,10 @@ $(window).load(function() {
 		    var $td = $('<td>');
 		    var $img = $('<img>').attr('src', 'image/' + items[k].filename)
 			    .attr({'id': 'e' + k, 'class': 'collection'});
-		    var $p = $('<p>').html(items[k].name);
+
+		    var name = items[k].name;
+		    name = name.replace(/\s/g, '</br>');
+		    var $p = $('<p>').html(name);
 
 		    $td.append($img);
 		    $td.append($p);
