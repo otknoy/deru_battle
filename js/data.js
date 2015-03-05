@@ -1,17 +1,4 @@
 var Data = {};
-var data_num = 0;
-var sample_num = 0;
-var areaInfo = loading_csv("data/area.csv");
-var prop_num = [0, 0, 0];
-
-/*-- CSVファイル読み込み --*/
-function loading_csv(filename){
-	var csv2txt = Data2.loadFile(filename);
-	var csv_data = Data2.parseCSV(csv2txt); 
-	var csv_dict = Data2.csv2dict(csv_data);
-
-	return csv_dict; 
-}
 
 Data.loadFile = function(filename) {
     var dfd = $.Deferred();
@@ -136,22 +123,22 @@ Data.place2skill = {
 
 Data.parseOsakaData = function(dictArray) {
     return dictArray.map(function(dict) {
-		// X,Y,施設名,施設名かな,施設名（施設名かな）,所在地,地区名,TEL,FAX,詳細情報,開館時間,URL,バリアフリー情報,駐輪場 PC,駐輪場 携,大分類,小分類,カテゴリ,アイコン番号,施設ID
-		var item = {
-			"id": parseInt(dict["施設ID"]),
-			"latitude": parseFloat(dict["Y"]),
-			"longitude": parseFloat(dict["X"]),
-			"name": dict["施設名"],
-			"icon_number": parseInt(dict["アイコン番号"])
-		};
+	// X,Y,施設名,施設名かな,施設名（施設名かな）,所在地,地区名,TEL,FAX,詳細情報,開館時間,URL,バリアフリー情報,駐輪場 PC,駐輪場 携,大分類,小分類,カテゴリ,アイコン番号,施設ID
+	var item = {
+	    "id": parseInt(dict["施設ID"]),
+	    "latitude": parseFloat(dict["Y"]),
+	    "longitude": parseFloat(dict["X"]),
+	    "name": dict["施設名"],
+	    "icon_number": parseInt(dict["アイコン番号"])
+	};
 
-		return item;
+	return item;
     });
 };
 
 Data.filterOsakaData = function(osakaData) {
     return osakaData.filter(function(d) {
-		return d["icon_number"] in Data.id2place;
+	return d["icon_number"] in Data.id2place;
     });
 };
 
@@ -172,8 +159,8 @@ Data.loadOsakaData = function() {
 	    var dict = Data.csv2dict(csv);
 	    var osakaData = Data.parseOsakaData(dict);
 
-	    // osakaData = Data.filterOsakaData(osakaData);
-	    // osakaData = Data.addTypeToOsakaData(osakaData);
+	    osakaData = Data.filterOsakaData(osakaData);
+	    osakaData = Data.addTypeToOsakaData(osakaData);
 
 	    dfd.resolve(osakaData);
 	});
@@ -185,68 +172,34 @@ Data.loadOsakaData = function() {
 
 Data.filterByRegion = function(data, lat1, lng1, lat2, lng2) {
     var filteredData = [];
-    var prop = {"身体的パワー": 0,
-		        "社会的パワー": 1,
-			    "精神的パワー": 2};
-	console.log("オリジナルデータの数\n" + data.length);
-	data_num = 0;
-	prop_num = [0, 0, 0];
     for (var i = 0; i < data.length; i++) {
-		var d = data[i];
-		// データが表示範囲内にあるかどうか
-		if (lat1 < d.latitude  && d.latitude  < lat2 &&
-		    lng1 < d.longitude && d.longitude < lng2) {
-			// アイコン番号がNaNでないもの
-			if(!isNaN(d['icon_number'])){
-				for( k = 0; k < 20; k++){
-					// アイコン番号が指定のアイコン番号と一致しているもの、かつundefinedでない
-					if(areaInfo[k]["icon"] == d['icon_number'] && d != undefined){
-						filteredData.push(d);
-						data_num++;
-						prop_num[prop[Data.place2skill[Data.id2place[d.icon_number]]]]++;
-						break;
-					}
-				}
-			}
-		}
+	var d = data[i];
+	if (lat1 < d.latitude  && d.latitude  < lat2 &&
+	    lng1 < d.longitude && d.longitude < lng2) {
+	    filteredData.push(d);
+	}
     }
     return filteredData;
 };
 
 Data.sample = function(data, n) {
     function getRandomInt(min, max) {
-		return Math.floor(Math.random() * (max - min + 1)) + min;
+	return Math.floor(Math.random() * (max - min + 1)) + min;
     }
-	
-    console.log("表示範囲内のデータの数\n" + data_num);
-	console.log("body : " + prop_num[0]);
-	console.log("social : " + prop_num[1]);
-	console.log("mind : " + prop_num[2]);
-    if (data_num < n) {
-		sample_num = data_num;
-		console.log("選択したデータの数\n" + sample_num);
-		return data;
+    
+    if (data.length < n) {
+	return data;
     }
 
     var samples = [];
-	var num_max = data_num;
     for (var i = 0; i < n; i++) {
-		// 表示範囲内のデータからランダムでデータを選択する
-		var j = getRandomInt(0, num_max-1);
-		//if(data[j]
-		samples.push(data[j]);
-		// data[j]をdata[]の中から取り除く
-		data.splice(j, 1);
-		num_max--;
-	}
-	sample_num = n;
-	console.log("選択したデータの数\n" + sample_num);
+	var j = getRandomInt(0, data.length-1);
+
+	samples.push(data[j]);
+	data.splice(j, 1);
+    }
     return samples;
 };
-
-Data.getSamNum = function(){
-	return sample_num;
-}
 
 Data.filter = function(data, lat1, lng1, lat2, lng2, sample) {
     data = Data.filterByRegion(data, lat1, lng1, lat2, lng2);
