@@ -1,37 +1,8 @@
 /*-- 画面が開かれたとき --*/
 $(window).load(function() {
-    loadItems()
-	.then(function(items) {
-	    var $table = $('table#collection');
-	    var w = 3;
-	    var h = items.length / w;
-	    for (var i = 0; i < h; i++) {
-		var $tr = $('<tr>');
-
-		for (var j = 0; j < w; j++) {
-		    var k = i*w + j;
-
-		    if (k >= items.length-1) {
-			break;
-		    }
-
-		    var $td = $('<td>');
-		    var $img = $('<img>').attr('src', 'image/' + items[k].filename)
-			    .attr({'id': 'e' + k, 'class': 'collection'});
-
-		    var name = items[k].name;
-		    name = name.replace(/\s/g, '</br>');
-		    var $p = $('<p>').html(name);
-
-		    $td.append($img);
-		    $td.append($p);
-
-		    $tr.append($td);
-		}
-
-		$table.append($tr);
-	    }
-	});
+    loadItems().then(function(items) {
+	displayCollection(items);
+    });
 });
 
 function loadItems(collection) {
@@ -63,4 +34,36 @@ function loadItems(collection) {
 	});
 
     return dfd.promise();
+}
+
+function displayCollection(items) {
+    var $table = $('table#collection');
+    var w = 3;
+    var h = items.length / w;
+    for (var i = 0; i < h; i++) {
+	var $tr = $('<tr>');
+
+	for (var j = 0; j < w; j++) {
+	    var k = i*w + j;
+
+	    if (k >= items.length-1) {
+		break;
+	    }
+
+	    var $td = $('<td>');
+	    var $img = $('<img>').attr('src', 'image/' + items[k].filename)
+		    .attr({'id': 'e' + k, 'class': 'collection'});
+
+	    var name = items[k].name;
+	    name = name.replace(/\s/g, '</br>');
+	    var $p = $('<p>').html(name);
+
+	    $td.append($img);
+	    $td.append($p);
+
+	    $tr.append($td);
+	}
+
+	$table.append($tr);
+    }
 }
