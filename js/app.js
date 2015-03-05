@@ -4,6 +4,7 @@ field_bgm.volume = 0.7;
 field_bgm.loop = true;
 field_bgm.play();
 
+// 地図を読み込む
 var lat = 34.705895;
 var lng = 135.494474;
 var map = Map.createMap('map-canvas', lat, lng, 16);
@@ -104,6 +105,20 @@ function findNearestItemIndex(items, playerPos) {
     }
     return index;
 }
+
+
+// ステータスを読み込む
+var playerStatus = JSON.parse(localStorage.getItem("playerStatus"));
+Status.update(playerStatus);
+
+
+// コレクションを読み込む
+Collection.loadItems().then(function(items) {
+    Collection.displayCollection(items);
+});
+
+
+
 
 function getEncountingEnemyIndexes(playceType) {
     var skillType = "normal";

@@ -1,11 +1,6 @@
-/*-- 画面が開かれたとき --*/
-$(window).load(function() {
-    loadItems().then(function(items) {
-	displayCollection(items);
-    });
-});
+var Collection = {};
 
-function loadItems(collection) {
+Collection.loadItems = function(collection) {
     var dfd = $.Deferred();
 
     Data.loadFile("data/collection.csv")
@@ -34,9 +29,9 @@ function loadItems(collection) {
 	});
 
     return dfd.promise();
-}
+};
 
-function displayCollection(items) {
+Collection.displayCollection = function(items) {
     var $table = $('table#collection');
     var w = 3;
     var h = items.length / w;
@@ -66,4 +61,4 @@ function displayCollection(items) {
 
 	$table.append($tr);
     }
-}
+};
