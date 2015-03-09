@@ -5,12 +5,7 @@ var ui_trick = 0;	// フィジカル：0 , ソーシャル：1 , スピルチュ
 var comment_flg = false;
 var game_result;	// 勝敗を保存 
 var bat_res;		// 戦闘の勝敗 0:win, 1:lose, 2:tie(player win) 3:tie(player lose)
-var comInfo;		// コメント文字列データ
-var enemyInfo;		// 敵情報の格納
-var playerInfo;		// プレイヤー情報の格納
 var damege;			// 現在の戦闘によるダメージを保存
-var cInfo;			// コレクション情報
-var pInfo;			// プレイヤー情報
 var battle_bgm = new Audio("sound/battle_bgm.mp3");
 var button = new Audio("sound/button.mp3");
 var modoru = new Audio("sound/modoru.mp3");
@@ -77,7 +72,7 @@ var Enemy = function(enemyStatus) {
 };
 
 /*-- 技のクラス --*/
-function Trick(){
+var Trick = function(){
     // 技の名前
     this.name = ["わんぱく", "正義感", "母性",
 		 "かしこさ", "金の力", "安定感",
@@ -87,9 +82,9 @@ function Trick(){
     // 属性の強弱 0win1 1win2 2win0
     this.win = [1, 2, 0];
     this.los = [2, 0, 1];
-}
-var trick = new Trick();
+};
 
+var trick = new Trick();
 var player = null;
 var enemy = null;
 /*-- 戦闘画面が開かれたとき --*/
@@ -555,7 +550,7 @@ $("div.button_leftdown").click(function() {
     button.play();
     switch(stage){
     case 0:		// 「ステータス」
-	com_status();
+	displayStatus(player);
 	
 	break;
     case 1:		// 「スピルチュアル」
@@ -601,23 +596,23 @@ function com_escape(){
 }
 
 /*-- ステータス選択時のメソッド --*/
-function com_status(){
-    var str_status;
-    str_status = "現在の" + pInfo["name"] + "のステータス" + "\n";
-    str_status += "レベル：" + pInfo["lv"] + "\n";
-    str_status += "ＨＰ：" + pInfo["hp"] + "\n\n";
-    str_status += "フィジカル：" + pInfo["body"] + "\n";
-    str_status += "ソーシャル：" + pInfo["social"] + "\n";
-    str_status += "マインド：" + pInfo["mind"] + "\n\n";
-    str_status += "わんぱく：" + pInfo["wanpaku"] + "\n";
-    str_status += "正義感：" + pInfo["seigi"] + "\n";
-    str_status += "母性：" + pInfo["bosei"] + "\n";
-    str_status += "かしこさ：" + pInfo["kasikosa"] + "\n";
-    str_status += "金の力：" + pInfo["kane"] + "\n";
-    str_status += "安定感：" + pInfo["antei"] + "\n";
-    str_status += "清めの力：" + pInfo["kiyome"] + "\n";
-    str_status += "霊感：" + pInfo["reikan"] + "\n";
-    str_status += "感受性：" + pInfo["kanjusei"] + "\n";
+function displayStatus(player){
+    var str_status = "現在の" + player.name + "のステータス" + "\n";
+    str_status += "レベル：" + player.lv + "\n";
+    str_status += "ＨＰ：" + player.hp + "\n\n";
+    str_status += "フィジカル：" + player.power[0] + "\n";
+    str_status += "ソーシャル：" + player.power[1] + "\n";
+    str_status += "マインド：" + player.power[2] + "\n\n";
+    str_status += "わんぱく：" + player.status[0] + "\n";
+    str_status += "正義感：" + player.status[1] + "\n";
+    str_status += "母性：" + player.status[2] + "\n";
+    str_status += "かしこさ：" + player.status[3] + "\n";
+    str_status += "金の力：" + player.status[4] + "\n";
+    str_status += "安定感：" + player.status[5] + "\n";
+    str_status += "清めの力：" + player.status[6] + "\n";
+    str_status += "霊感：" + player.status[7] + "\n";
+    str_status += "感受性：" + player.status[8] + "\n";
+
     alert(str_status);
 }
 
