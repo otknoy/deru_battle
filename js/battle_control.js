@@ -95,8 +95,6 @@ var enemy = null;
 /*-- 戦闘画面が開かれたとき --*/
 $(window).load(function() {
     // 各種情報を読み込む
-    // loading_cinfo();
-
     var playerStatus = JSON.parse(localStorage.getItem("playerStatus"));
     player = new Player(playerStatus);
 
@@ -469,19 +467,6 @@ function loading_csv(filename){
     var csv_dict = Data2.csv2dict(csv_data);
 
     return csv_dict; 
-}
-
-/*-- Cokkie読み込み --*/
-function loading_cinfo(){
-    cInfo = JSON.parse(localStorage.getItem("collection"));
-    console.log("cokkie - 読み込み完了");
-}
-
-/*-- Cokkie読み込み --*/
-function loading_pinfo(){
-    pInfo = JSON.parse(localStorage.getItem("playerStatus"));
-    console.log("cokkie - 読み込み完了");
-    console.log(pInfo);
 }
 
 /*-- コメント文字列読み込み  --*/
