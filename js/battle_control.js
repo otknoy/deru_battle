@@ -49,18 +49,32 @@ var Player = function(playerStatus) {
 };
 
 /*-- 敵のクラス --*/
-function Enemy(){
-    // プロパティ
-    this.id;		// 敵のID
-    this.name;		// 敵の名前
-    this.image;		// 敵の画像ファイルの名前
-    this.hp;		// 敵の基本HP
-    this.power = [];// 基本属性パワー(0:body 1:social 2:mind)
-    this.status = [];	// ステータス値
-    this.prop;		// 敵の属性
-    this.trick;		// 敵の出す技のID
-}
-var enemy = new Enemy();
+var Enemy = function(enemyStatus) {
+    var es = enemyStatus;
+
+    this.id = parseInt(es.id);
+    this.name = es.name;
+    this.image = es.file;
+    this.hp = parseInt(es.hp);
+
+    this.power = [
+	parseInt(es.body),
+	parseInt(es.social),
+	parseInt(es.mind)
+    ];
+
+    this.status = [
+	parseInt(es.wanpaku),
+	parseInt(es.seigi),
+	parseInt(es.bosei),
+	parseInt(es.kasikosa),
+	parseInt(es.kane),
+	parseInt(es.antei),
+	parseInt(es.kiyome),
+	parseInt(es.reikan),
+	parseInt(es.kanjusei)
+    ];
+};
 
 /*-- 技のクラス --*/
 function Trick(){
@@ -77,7 +91,7 @@ function Trick(){
 var trick = new Trick();
 
 var player = null;
-
+var enemy = null;
 /*-- 戦闘画面が開かれたとき --*/
 $(window).load(function() {
     // 各種情報を読み込む
@@ -86,10 +100,10 @@ $(window).load(function() {
     var playerStatus = JSON.parse(localStorage.getItem("playerStatus"));
     player = new Player(playerStatus);
 
-    // loading_pinfo();
-    // loading_player();
+    var enemyId = localStorage.getItem("current");
+    var enemyStatus = loading_csv("data/enemy_info.csv")[enemyId];
+    enemy = new Enemy(enemyStatus);
 
-    loading_enemy();
     loading_panel();
     loading_comment();
     // 戦闘画面を構築する
@@ -474,40 +488,6 @@ function loading_pinfo(){
 function loading_comment(){
     // comment.csvからコメント文字列の読み込み
     comInfo = Data2.parseCSV(Data2.loadFile("data/comment.csv"));
-}
-
-/*-- 敵情報の取得 --*/
-function loading_enemy(){
-    // 敵情報の取得
-    enemyInfo = loading_csv("data/enemy_info.csv");
-
-    // current.txtを読み込み、どのIDの敵とエンカウントしたか判定
-    console.log(localStorage.getItem("current"));
-    var id = localStorage.getItem("current");
-    
-    // enemyクラスに格納
-    enemy.id = parseInt(enemyInfo[id]["id"]);
-    enemy.name = enemyInfo[id]["name"];
-    enemy.image = enemyInfo[id]["file"];
-    enemy.hp = parseInt(enemyInfo[id]["hp"]);
-    enemy.power[0] = parseInt(enemyInfo[id]["body"]);
-    enemy.power[1] = parseInt(enemyInfo[id]["social"]);
-    enemy.power[2] = parseInt(enemyInfo[id]["mind"]);
-    enemy.status[0] = parseInt(enemyInfo[id]["wanpaku"]);
-    enemy.status[1] = parseInt(enemyInfo[id]["seigi"]);
-    enemy.status[2] = parseInt(enemyInfo[id]["bosei"]);
-    enemy.status[3] = parseInt(enemyInfo[id]["kasikosa"]);
-    enemy.status[4] = parseInt(enemyInfo[id]["kane"]);
-    enemy.status[5] = parseInt(enemyInfo[id]["antei"]);
-    enemy.status[6] = parseInt(enemyInfo[id]["kiyome"]);
-    enemy.status[7] = parseInt(enemyInfo[id]["reikan"]);
-    enemy.status[8] = parseInt(enemyInfo[id]["kanjusei"]);
-    enemy.prop = parseInt(enemyInfo[id]["property"]);
-    console.log("敵のステータス情報");
-    console.log(enemy);
-    console.log(enemy.power);
-    console.log(enemy.status);
-
 }
 
 /*-- 画面上に敵を反映する --*/
