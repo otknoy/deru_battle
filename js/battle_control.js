@@ -16,19 +16,37 @@ var button = new Audio("sound/button.mp3");
 var modoru = new Audio("sound/modoru.mp3");
 
 /*-- プレイヤーのクラス --*/
-function Player(){
-    // プロパティ
-    this.name;		// 名前
-    this.lv;		// レベル
-    this.hp;		// HP
-    this.escape;	// にげあし
-    this.power = [];// 基本属性パワー(0:body 1:social 2:mind)
-    this.p_max;		// 上記パワーの上限値
-    this.status = [];	// ステータス値
-    this.s_max;		// 上記ステータスの上限値
-    this.trick;		// 出す技のID
-}
-var player = new Player();
+var Player = function(playerStatus) {
+    var ps = playerStatus;
+
+    this.name = ps["name"];
+    this.lv = ps["lv"];
+    this.hp = ps["hp"];
+    this.escape = ps["escape"];
+
+    this.p_max = ps["p_max"];
+    this.s_max = ps["s_max"];
+
+    this.power = [
+	ps["body"],
+	ps["social"],
+	ps["mind"]
+    ];
+
+    this.status = [
+	ps["wanpaku"],
+	ps["seigi"],
+	ps["bosei"],
+	ps["kasikosa"],
+	ps["kane"],
+	ps["antei"],
+	ps["kiyome"],
+	ps["reikan"],
+	ps["kanjusei"],
+    ];
+
+    this.trick = null;
+};
 
 /*-- 敵のクラス --*/
 function Enemy(){
@@ -58,12 +76,19 @@ function Trick(){
 }
 var trick = new Trick();
 
+var player = null;
+
 /*-- 戦闘画面が開かれたとき --*/
 $(window).load(function() {
     // 各種情報を読み込む
-    loading_cinfo();
-    loading_pinfo();
-    loading_player();
+    // loading_cinfo();
+
+    var playerStatus = JSON.parse(localStorage.getItem("playerStatus"));
+    player = new Player(playerStatus);
+
+    // loading_pinfo();
+    // loading_player();
+
     loading_enemy();
     loading_panel();
     loading_comment();
