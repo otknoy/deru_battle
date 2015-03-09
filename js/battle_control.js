@@ -510,36 +510,6 @@ function loading_enemy(){
 
 }
 
-/*-- プレイヤー情報の取得 --*/
-function loading_player(){
-    // プレイヤー情報の取得
-    playerInfo = loading_csv("data/player.csv");
-
-    // playerクラスに格納
-    player.name = pInfo["name"];
-    player.lv = pInfo["lv"];
-    player.hp = pInfo["hp"];
-    player.escape = pInfo["escape"];
-    player.power[0] = pInfo["body"];
-    player.power[1] = pInfo["social"];
-    player.power[2] = pInfo["mind"];
-    player.p_max = pInfo["p_max"];	
-    player.status[0] = pInfo["wanpaku"];
-    player.status[1] = pInfo["seigi"];
-    player.status[2] = pInfo["bosei"];
-    player.status[3] = pInfo["kasikosa"];
-    player.status[4] = pInfo["kane"];
-    player.status[5] = pInfo["antei"];
-    player.status[6] = pInfo["kiyome"];
-    player.status[7] = pInfo["reikan"];
-    player.status[8] = pInfo["kanjusei"];
-    player.s_max = pInfo["s_max"];		
-    console.log("プレイヤーのステータス情報");
-    console.log(player);
-    console.log(player.power);
-    console.log(player.status);
-}
-
 /*-- 画面上に敵を反映する --*/
 function set_battle(){
     // 敵の名前
