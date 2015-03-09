@@ -1,4 +1,3 @@
-
 /*-- 変数 --*/
 var stage = 0;		// UIの段階区別
 var ui_trick = 0;	// フィジカル：0 , ソーシャル：1 , スピルチュアル：2
@@ -44,32 +43,44 @@ var Player = function(playerStatus) {
 };
 
 /*-- 敵のクラス --*/
-var Enemy = function(enemyStatus) {
-    var es = enemyStatus;
+var Enemy = function() {
+    var Enemy =function(enemyStatus) {
+	var es = enemyStatus;
 
-    this.id = parseInt(es.id);
-    this.name = es.name;
-    this.image = es.file;
-    this.hp = parseInt(es.hp);
+	this.id = parseInt(es.id);
+	this.name = es.name;
+	this.image = es.file;
+	this.hp = parseInt(es.hp);
 
-    this.power = [
-	parseInt(es.body),
-	parseInt(es.social),
-	parseInt(es.mind)
-    ];
+	this.power = [
+	    parseInt(es.body),
+	    parseInt(es.social),
+	    parseInt(es.mind)
+	];
 
-    this.status = [
-	parseInt(es.wanpaku),
-	parseInt(es.seigi),
-	parseInt(es.bosei),
-	parseInt(es.kasikosa),
-	parseInt(es.kane),
-	parseInt(es.antei),
-	parseInt(es.kiyome),
-	parseInt(es.reikan),
-	parseInt(es.kanjusei)
-    ];
-};
+	this.status = [
+	    parseInt(es.wanpaku),
+	    parseInt(es.seigi),
+	    parseInt(es.bosei),
+	    parseInt(es.kasikosa),
+	    parseInt(es.kane),
+	    parseInt(es.antei),
+	    parseInt(es.kiyome),
+	    parseInt(es.reikan),
+	    parseInt(es.kanjusei)
+	];
+    };
+
+    var p = Enemy.prototype;
+
+    p.appear = function() {
+	$(".name").text(this.name);
+	$("img.enemy").attr("src", "image/" + this.image);
+	$(".hp").text("HP " + this.hp);
+    };
+
+    return Enemy;
+}();
 
 /*-- 技のクラス --*/
 var Trick = function(){
@@ -87,6 +98,7 @@ var Trick = function(){
 var trick = new Trick();
 var player = null;
 var enemy = null;
+
 /*-- 戦闘画面が開かれたとき --*/
 $(window).load(function() {
     // 各種情報を読み込む
@@ -96,13 +108,16 @@ $(window).load(function() {
     var enemyId = localStorage.getItem("current");
     var enemyStatus = loading_csv("data/enemy_info.csv")[enemyId];
     enemy = new Enemy(enemyStatus);
+    enemy.appear();
 
-    loading_panel();
-    loading_comment();
-    // 戦闘画面を構築する
-    set_battle();
     // 敵の出す技を決める
     set_Etrick();
+
+
+    // UI
+    loading_panel();
+    var comments = loadComment();
+
     // BGM
     battle_bgm.load();
     battle_bgm.volume = 0.7;
@@ -465,25 +480,12 @@ function loading_csv(filename){
 }
 
 /*-- コメント文字列読み込み  --*/
-function loading_comment(){
-    // comment.csvからコメント文字列の読み込み
-    comInfo = Data2.parseCSV(Data2.loadFile("data/comment.csv"));
+function loadComment(){
+    return Data2.parseCSV(Data2.loadFile("data/comment.csv"));
 }
-
-/*-- 画面上に敵を反映する --*/
-function set_battle(){
-    // 敵の名前
-    $(".name").text(enemy.name);
-    // 敵の画像
-    $("img.enemy").attr("src", "image/" + enemy.image);
-    // 敵のHP
-    $(".hp").text("HP " + enemy.hp);
-}
-
 
 
 /*------------- 以下、UI操作 -------------*/
-
 
 /*-- 画面読み込み時のメソッド --*/
 function loading_panel(){
