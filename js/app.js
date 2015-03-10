@@ -8,7 +8,7 @@ Geo.getCurrentPosition().then(function(coords) {
     var lat = coords.latitude;
     var lng = coords.longitude;
     var map = Map.createMap('map-canvas', lat, lng, 16);
-    var playerMarker = Map.createMarker(map, '現在地', lat, lng, true);
+    var playerMarker = Map.createMarker(map, '現在地', lat, lng, false);
 
     Data.loadOsakaData().then(function(data) {
 	var circles = [];
