@@ -155,12 +155,13 @@ $(window).load(function() {
     var enemyId = localStorage.getItem("current");
     var enemyStatus = loading_csv("data/enemy_info.csv")[enemyId];
     enemy = new Enemy(enemyStatus);
+
     enemy.appear();
     // 敵の出す技を決める
     enemy.chooseTrick();
 
     // UI
-    loading_panel();
+    displayCommandPanel();
     var comments = loadComment();
 
     // BGM
@@ -486,7 +487,7 @@ function loadComment(){
 /*------------- 以下、UI操作 -------------*/
 
 /*-- 画面読み込み時のメソッド --*/
-function loading_panel(){
+function displayCommandPanel(){
     // 左上
     $(".button_leftup").text("たたかう");
     $(".button_leftup").css("background-color", "#ffff99");
@@ -621,7 +622,7 @@ function com_back(){
     switch(stage){
     case 1:
 	stage = 0;
-	loading_panel();
+	displayCommandPanel();
 	break;
     case 2:
 	stage = 1;
