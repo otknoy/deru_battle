@@ -173,53 +173,6 @@ $(window).load(function() {
 
 /*------------- 以下、戦闘用メソッド -------------*/
 
-/*-- 敵の出す技の決定 --*/
-function set_Etrick(){
-    // 出す技の基本属性の決定
-    var start = enemy.power[0];
-    var inter = start + enemy.power[1];
-    var end = inter + enemy.power[2];
-    // 0 ～ end までのランダムな数値を取得し、0 ～ start = body, start ～ inter = social, inter ～ end = mind
-    var ran = Math.floor(Math.random() * end);
-    var prop;	// 0:body , 1:social, 2:mind
-    if(0 <= ran && ran <= start){
-	prop = 0;
-    } else if(start < ran && ran <= inter){
-	prop = 1;
-    } else if(inter < ran && ran <= end){
-	prop = 2;
-    }
-    /*
-     console.log("start = " + start);
-     console.log("inter = " + inter);
-     console.log("end = " + end);
-     console.log("ran = " + ran);
-     console.log("prop = " + prop);
-     */
-
-    // 出す技の決定
-    start = enemy.status[0 + prop * 3];
-    inter = start + enemy.status[1 + prop * 3];
-    end = inter + enemy.status[2 + prop * 3];
-    ran = Math.floor(Math.random() * end);
-    var tri;
-    if(0 <= ran && ran <= start){
-	tri = 0 + prop * 3;
-    } else if(start < ran && ran <= inter){
-	tri = 1 + prop * 3;
-    } else if(inter < ran && ran <= end){
-	tri = 2 + prop * 3;
-    }
-    /*
-     console.log("start = " + start);
-     console.log("inter = " + inter);
-     console.log("end = " + end);
-     console.log("ran = " + ran);
-     console.log("trick = " + tri);
-     */
-    enemy.trick = tri;
-}
-
 /*-- 配列の最大値を返す --*
  function MaxValue(array){
  var max = 0;
