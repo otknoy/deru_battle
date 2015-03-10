@@ -79,6 +79,53 @@ var Enemy = function() {
 	$(".hp").text("HP " + this.hp);
     };
 
+    p.chooseTrick = function() {
+	var chooseProperty = function(e) { // 出す技の基本属性の決定
+	    var begin = e.power[0];
+	    var middle = begin + e.power[1];
+	    var end = middle + e.power[2];
+
+	    var prop; // 0:body, 1:social, 2:mind
+	    var rand = Math.floor(Math.random() * end);
+	    if (rand <= begin) {
+		prop = 0;
+	    } else if (rand <= middle) {
+		prop = 1;
+	    } else if (rand <= end) {
+		prop = 2;
+	    }
+
+	    return prop;
+	};
+
+	var chooseTrick = function(skill1, skill2, skill3) {
+	    var begin = skill1;
+	    var middle = begin + skill2;
+	    var end = middle + skill3;
+
+	    var trick;
+	    var rand = Math.floor(Math.random() * end);
+	    if (rand <= begin) {
+		trick = 0 + prop * 3;
+	    } else if (rand <= middle) {
+		trick = 1 + prop * 3;
+	    } else if (rand <= end) {
+		trick = 2 + prop * 3;
+	    }
+
+	    return trick;
+	};
+
+
+	var prop = chooseProperty(this);
+	var skill1 = this.status[0 + prop * 3];
+	var skill2 = this.status[1 + prop * 3];
+	var skill3 = this.status[2 + prop * 3];
+	var trick = chooseTrick(skill1, skill2, skill3);
+
+	this.trick = trick;
+    };
+
     return Enemy;
 }();
 
@@ -109,10 +156,8 @@ $(window).load(function() {
     var enemyStatus = loading_csv("data/enemy_info.csv")[enemyId];
     enemy = new Enemy(enemyStatus);
     enemy.appear();
-
     // 敵の出す技を決める
-    set_Etrick();
-
+    enemy.chooseTrick();
 
     // UI
     loading_panel();
