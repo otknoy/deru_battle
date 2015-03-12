@@ -1,0 +1,122 @@
+[
+ {
+  "status": "0", 
+  "prop": "0", 
+  "name": "公園", 
+  "icon": "154"
+ }, 
+ {
+  "status": "1", 
+  "prop": "0", 
+  "name": "交番", 
+  "icon": "119"
+ }, 
+ {
+  "status": "2", 
+  "prop": "0", 
+  "name": "保育園", 
+  "icon": "124"
+ }, 
+ {
+  "status": "2", 
+  "prop": "0", 
+  "name": "幼稚園", 
+  "icon": "125"
+ }, 
+ {
+  "status": "3", 
+  "prop": "1", 
+  "name": "図書館", 
+  "icon": "151"
+ }, 
+ {
+  "status": "3", 
+  "prop": "1", 
+  "name": "小学校", 
+  "icon": "126"
+ }, 
+ {
+  "status": "3", 
+  "prop": "1", 
+  "name": "中学校", 
+  "icon": "127"
+ }, 
+ {
+  "status": "3", 
+  "prop": "1", 
+  "name": "高等学校", 
+  "icon": "128"
+ }, 
+ {
+  "status": "3", 
+  "prop": "1", 
+  "name": "専門学校", 
+  "icon": "129"
+ }, 
+ {
+  "status": "3", 
+  "prop": "1", 
+  "name": "短期大学・大学", 
+  "icon": "130"
+ }, 
+ {
+  "status": "4", 
+  "prop": "1", 
+  "name": "銀行", 
+  "icon": "203"
+ }, 
+ {
+  "status": "5", 
+  "prop": "1", 
+  "name": "市役所・町村役場", 
+  "icon": "100"
+ }, 
+ {
+  "status": "5", 
+  "prop": "1", 
+  "name": "区役所", 
+  "icon": "101"
+ }, 
+ {
+  "status": "5", 
+  "prop": "1", 
+  "name": "職業安定所", 
+  "icon": "111"
+ }, 
+ {
+  "status": "6", 
+  "prop": "2", 
+  "name": "公衆便所", 
+  "icon": "169"
+ }, 
+ {
+  "status": "6", 
+  "prop": "2", 
+  "name": "ごみ処理施設", 
+  "icon": "114"
+ }, 
+ {
+  "status": "7", 
+  "prop": "2", 
+  "name": "神社", 
+  "icon": "147"
+ }, 
+ {
+  "status": "7", 
+  "prop": "2", 
+  "name": "寺院", 
+  "icon": "148"
+ }, 
+ {
+  "status": "8", 
+  "prop": "2", 
+  "name": "美術館", 
+  "icon": "152"
+ }, 
+ {
+  "status": "8", 
+  "prop": "2", 
+  "name": "博物館・資料館", 
+  "icon": "150"
+ }
+]
