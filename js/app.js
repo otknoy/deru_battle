@@ -76,6 +76,10 @@ Geo.getCurrentPosition().then(function(coords) {
 
 function checkPlaceType(items, circles,  playerPos) {
     var i = findNearestItemIndex(items, playerPos);
+    if (i < 0) {
+	return null;
+    }
+
     var item = items[i];
     var circle = circles[i];
     
@@ -91,7 +95,7 @@ function checkPlaceType(items, circles,  playerPos) {
 }
 
 function findNearestItemIndex(items, playerPos) {
-    var index = null;
+    var index = -1;
     var minDist = Number.MAX_VALUE;
     for (var i = 0; i < items.length; i++) {
 	var item = items[i];
